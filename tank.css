@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Игра Танк и Вертолёт</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #6fc2f2;
+      font-family: sans-serif;
+    }
+    #tank {
+      position: absolute;
+      bottom: 20px;
+      left: 50px;
+      font-size: 60px;
+    }
+    #helicopter {
+      position: absolute;
+      top: 50px;
+      left: -100px;
+      font-size: 60px;
+      cursor: pointer;
+      animation: flyRight 6s linear infinite;
+    }
+    @keyframes flyRight {
+      0% { left: -100px; top: 50px; }
+      50% { top: 100px; }
+      100% { left: 100vw; top: 50px; }
+    }
+    #score {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 24px;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+<div id="tank">🛡️</div>
+<div id="helicopter">🚁</div>
+<div id="score">Очки: 0</div>
+
+<script>
+  const tank = document.getElementById('tank');
+  const heli = document.getElementById('helicopter');
+  const scoreDisplay = document.getElementById('score');
+  let score = 0;
+
+  // Управление танком
+  document.addEventListener('keydown', (e) => {
+    const step = 20;
+    const currentLeft = tank.offsetLeft;
+
+    if (e.key === "ArrowRight" && currentLeft + step < window.innerWidth - 60) {
+      tank.style.left = currentLeft + step + "px";
+    } else if (e.key === "ArrowLeft" && currentLeft - step > 0) {
+      tank.style.left = currentLeft - step + "px";
+    }
+  });
+
+  // Клик по вертолёту
+  heli.addEventListener('click', () => {
+    heli.style.display = 'none';
+    score += 1;
+    scoreDisplay.textContent = "Очки: " + score;
+
+    // Показать вертолёт снова после 3 сек
+    setTimeout(() => {
+      heli.style.display = 'block';
+    }, 3000);
+  });
+</script>
+
+</body>
+</html>
